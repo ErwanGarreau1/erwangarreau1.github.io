@@ -1,0 +1,30 @@
+<html>
+<head>
+	<script>
+		
+		var intervalID = setInterval(callBack, 1000);
+		var var1 = 10;
+		var compteur;
+		function init(){
+			compteur = document.getElementById('cpt');
+			compteur.textContent=var1;
+		}
+		function callBack(){
+			if(var1<=0){
+				stopCount();
+			}
+			else{
+				var1 = var1-1;
+				compteur.textContent=var1;
+			}
+		}
+		function stopCount(){
+			clearInterval(intervalID);
+		}
+		
+	</script>
+</head>
+	<body onload='init()'>
+	<h1 id = "cpt">Initial</h1>
+	</body>
+</html>

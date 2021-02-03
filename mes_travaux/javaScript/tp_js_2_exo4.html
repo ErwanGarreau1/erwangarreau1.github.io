@@ -1,0 +1,113 @@
+<html>
+<head>
+	<body onload>
+	<canvas id="ctnCanvas" width="600" height="600"
+	style="border:3px solid #c3c3c3;">
+	</canvas>
+	</body>
+	<script>
+		
+		const ctnCanvas=document.getElementById('ctnCanvas');
+		const ctx = ctnCanvas.getContext("2d");
+
+		const carreWidth= 50;
+		const carreHeight= 50;	
+		const carreSpeed=10;
+		let clock=0;
+		
+		class Carre {
+			constructor(context,width,height,x,y,speed, delay, color){
+				this.context=context;
+				this.width=width;
+				this.height=height;
+				this.x=x;
+				this.y=y;
+				this.speed=speed;
+				this.color=color;
+				this.delay=delay;
+			}
+			clear(){
+				this.context.fillStyle='#D4D4D4';
+				this.context.fillRect(this.x, this.y, this.width, this.height);
+			}
+			
+			move(){
+				if(this.x+this.width>=ctnCanvas.width){
+					//clearInterval(this.interval);
+					this.x=ctnCanvas.width-this.width;
+					ctx.fillStyle = this.color;//"#FF0000";
+					ctx.fillRect(this.x,this.y,this.width,this.height);
+				}
+				else {
+					//console.log(clock + " - " + this.delay);
+					if(this.delay<clock){
+						this.x += this.speed;
+					}
+					ctx.fillStyle = this.color;//"#FF0000";
+					ctx.fillRect(this.x,this.y,this.width,this.height);
+				}
+			}
+		}
+		
+		ctx.fillStyle = "#D4D4D4";
+		ctx.fillRect(0,0,ctnCanvas.width,ctnCanvas.height);
+		
+		const objectsInGame = new Array();
+
+		const carre1 = new Carre(ctx,carreWidth, carreHeight,0,0,10,0,'#FF0000');
+		const carre2 = new Carre(ctx,carreWidth, carreHeight,0,carreHeight,20,3000,'#FF0000');
+		const carre3 = new Carre(ctx,carreWidth, carreHeight,0,2*carreHeight,30,4000,'#FF0000');
+		const carre4 = new Carre(ctx,carreWidth, carreHeight,0,3*carreHeight,40,4500,'#FF0000');
+		const carre5 = new Carre(ctx,carreWidth, carreHeight,0,4*carreHeight,50,5000,'#FF0000');
+		const carre6 = new Carre(ctx,carreWidth, carreHeight,0,5*carreHeight,60,5500,'#FF0000');
+
+		objectsInGame.push(carre1);
+		objectsInGame.push(carre2);
+		objectsInGame.push(carre3);
+		objectsInGame.push(carre4);
+		objectsInGame.push(carre5);
+		objectsInGame.push(carre6);
+		
+		
+		this.interval = setInterval(gameLoop,100);
+
+		function clearGame(){
+			objectsInGame.forEach(element => element.clear());
+		}
+
+
+		function updateGame(){
+			objectsInGame.forEach(element => element.move());
+		}
+		
+
+		function gameLoop(){
+			clock+=100;
+			clearGame();
+			updateGame();
+		}
+
+		/*function init(){
+			//setTimeout(startTimer, 4000);
+						
+			
+			
+			miniCanvas=document.getElementById('miniCanvas');
+			ctx.fillStyle = "#FF0000";
+			ctx.fillRect(0,0,miniCanvas.width,miniCanvas.height);
+			ctnCanvas.appendChild(miniCanvas);
+		}*/
+		
+		/*function startTimer(){
+			intervalID = setInterval(moveCanvas, 100);
+		}
+		
+		function clear(){
+			ctx.fillStyle = "#D4D4D4";
+			ctx.fillRect(coordX,0,miniCanvas.width,miniCanvas.height);
+		}*/
+
+
+	</script>
+</head>
+</html>
