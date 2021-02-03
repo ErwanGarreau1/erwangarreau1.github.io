@@ -6,7 +6,6 @@
 	</canvas>
 	</body>
 	<script>
-	//TODO (inachevé)
 		
 		const ctnCanvas=document.getElementById('ctnCanvas');
 		const ctx = ctnCanvas.getContext("2d");
@@ -14,6 +13,7 @@
 		const carreWidth= 50;
 		const carreHeight= 50;	
 		const carreSpeed=10;
+		let clock=0;
 		
 		class Carre {
 			constructor(context,width,height,x,y,speed, delay, color){
@@ -23,21 +23,26 @@
 				this.x=x;
 				this.y=y;
 				this.speed=speed;
-				this.interval = setInterval(this.move,100);
 				this.color=color;
+				this.delay=delay;
 			}
 			clear(){
-				this.context.clearRect(this.x, this.y, this.width, this.height);
+				this.context.fillStyle='#D4D4D4';
+				this.context.fillRect(this.x, this.y, this.width, this.height);
 			}
 			
 			move(){
 				if(this.x+this.width>=ctnCanvas.width){
-					clearInterval(this.interval);
+					//clearInterval(this.interval);
+					this.x=ctnCanvas.width-this.width;
+					ctx.fillStyle = this.color;//"#FF0000";
+					ctx.fillRect(this.x,this.y,this.width,this.height);
 				}
 				else {
-					this.clear;//clear(this.x);
-					
-					this.x += this.speed;
+					//console.log(clock + " - " + this.delay);
+					if(this.delay<clock){
+						this.x += this.speed;
+					}
 					ctx.fillStyle = this.color;//"#FF0000";
 					ctx.fillRect(this.x,this.y,this.width,this.height);
 				}
@@ -49,16 +54,38 @@
 		
 		const objectsInGame = new Array();
 
-		const carre1 = new Carre(ctx,carreWidth, carreHeight,0,0,10,4000,'#c3c3c3');
-		const carre2 = new Carre(ctx,carreWidth, carreHeight,0,carreHeight,20,5000,'#c3c3c3');
-		const carre3 = new Carre(ctx,carreWidth, carreHeight,0,2*carreHeight,30,6000,'#c3c3c3');
+		const carre1 = new Carre(ctx,carreWidth, carreHeight,0,0,10,0,'#FF0000');
+		const carre2 = new Carre(ctx,carreWidth, carreHeight,0,carreHeight,20,3000,'#FF0000');
+		const carre3 = new Carre(ctx,carreWidth, carreHeight,0,2*carreHeight,30,4000,'#FF0000');
+		const carre4 = new Carre(ctx,carreWidth, carreHeight,0,3*carreHeight,40,4500,'#FF0000');
+		const carre5 = new Carre(ctx,carreWidth, carreHeight,0,4*carreHeight,50,5000,'#FF0000');
+		const carre6 = new Carre(ctx,carreWidth, carreHeight,0,5*carreHeight,60,5500,'#FF0000');
 
 		objectsInGame.push(carre1);
 		objectsInGame.push(carre2);
 		objectsInGame.push(carre3);
+		objectsInGame.push(carre4);
+		objectsInGame.push(carre5);
+		objectsInGame.push(carre6);
 		
-		objectsInGame.forEach(element => ctnCanvas.append(element));
+		
+		this.interval = setInterval(gameLoop,100);
 
+		function clearGame(){
+			objectsInGame.forEach(element => element.clear());
+		}
+
+
+		function updateGame(){
+			objectsInGame.forEach(element => element.move());
+		}
+		
+
+		function gameLoop(){
+			clock+=100;
+			clearGame();
+			updateGame();
+		}
 
 		/*function init(){
 			//setTimeout(startTimer, 4000);
