@@ -19,7 +19,7 @@
 				audio = document.getElementById("player");
 				ctx.beginPath();
 				//ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-				ctx.arc(100, 75, 50, 0, -Math.PI * audio.currentTime / audio.duration, true);
+				ctx.arc(100, 75, 50, 0, 2*Math.PI * audio.currentTime / audio.duration, false);
 				ctx.stroke();
 			}
 </script>

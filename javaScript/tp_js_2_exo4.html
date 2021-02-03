@@ -1,0 +1,86 @@
+<html>
+<head>
+	<body onload>
+	<canvas id="ctnCanvas" width="600" height="600"
+	style="border:3px solid #c3c3c3;">
+	</canvas>
+	</body>
+	<script>
+	//TODO (inachevé)
+		
+		const ctnCanvas=document.getElementById('ctnCanvas');
+		const ctx = ctnCanvas.getContext("2d");
+
+		const carreWidth= 50;
+		const carreHeight= 50;	
+		const carreSpeed=10;
+		
+		class Carre {
+			constructor(context,width,height,x,y,speed, delay, color){
+				this.context=context;
+				this.width=width;
+				this.height=height;
+				this.x=x;
+				this.y=y;
+				this.speed=speed;
+				this.interval = setInterval(this.move,100);
+				this.color=color;
+			}
+			clear(){
+				this.context.clearRect(this.x, this.y, this.width, this.height);
+			}
+			
+			move(){
+				if(this.x+this.width>=ctnCanvas.width){
+					clearInterval(this.interval);
+				}
+				else {
+					this.clear;//clear(this.x);
+					
+					this.x += this.speed;
+					ctx.fillStyle = this.color;//"#FF0000";
+					ctx.fillRect(this.x,this.y,this.width,this.height);
+				}
+			}
+		}
+		
+		ctx.fillStyle = "#D4D4D4";
+		ctx.fillRect(0,0,ctnCanvas.width,ctnCanvas.height);
+		
+		const objectsInGame = new Array();
+
+		const carre1 = new Carre(ctx,carreWidth, carreHeight,0,0,10,4000,'#c3c3c3');
+		const carre2 = new Carre(ctx,carreWidth, carreHeight,0,carreHeight,20,5000,'#c3c3c3');
+		const carre3 = new Carre(ctx,carreWidth, carreHeight,0,2*carreHeight,30,6000,'#c3c3c3');
+
+		objectsInGame.push(carre1);
+		objectsInGame.push(carre2);
+		objectsInGame.push(carre3);
+		
+		objectsInGame.forEach(element => ctnCanvas.append(element));
+
+
+		/*function init(){
+			//setTimeout(startTimer, 4000);
+						
+			
+			
+			miniCanvas=document.getElementById('miniCanvas');
+			ctx.fillStyle = "#FF0000";
+			ctx.fillRect(0,0,miniCanvas.width,miniCanvas.height);
+			ctnCanvas.appendChild(miniCanvas);
+		}*/
+		
+		/*function startTimer(){
+			intervalID = setInterval(moveCanvas, 100);
+		}
+		
+		function clear(){
+			ctx.fillStyle = "#D4D4D4";
+			ctx.fillRect(coordX,0,miniCanvas.width,miniCanvas.height);
+		}*/
+
+
+	</script>
+</head>
+</html>
