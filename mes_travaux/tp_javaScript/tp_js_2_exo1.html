@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Mes Travaux</title>
+    <link rel="stylesheet" type="text/css" href="../../style.css">
+
+	<script>
+		
+		var intervalID = setInterval(callBack, 1000);
+		var varCpt = 10;
+		var compteur;
+		function init(){
+			compteur = document.getElementById('cpt');
+			compteur.textContent=varCpt;
+		}
+		function callBack(){
+			if(varCpt<=0){
+				stopCount();
+			}
+			else{
+				varCpt = varCpt-1;
+				compteur.textContent=varCpt;
+			}
+		}
+		function stopCount(){
+			clearInterval(intervalID);
+		}
+		
+	</script>
+	
+  </head>
+
+  <body onload='init()'>
+    <header>
+      <h1>Mes Travaux !</h1>
+	  <!-- Un jour peut être... -->
+    </header>
+
+    <nav>
+      <ul>
+		<li><a href="../mes_travaux.html" class="lien_titre">Mes travaux</a></li>
+        <li><a href="../../a_propos/a_propos.html" class="lien_titre"> À propos </a></li>
+        <li><a href="../../index.html" class="lien_titre"> Accueil </a></li>
+      </ul>
+
+     </nav>
+
+     <main>
+      <article>
+		<h2>TP2 - Callbacks</h2>
+        <p> "Produisez une page html présentant un compteur initialisé à 10 secondes et comptant à rebours, à raison d’une unité par seconde. Le décompte doit s’arrêter à 0 secondes."<p>
+		<h2 id = "cpt">Initial</h2>
+	  </article>
+
+      <aside>
+        <h2>Travaux réalisés</h2>
+        <ul>
+			<li><a href="#"></a>TP JavaScript</li>
+				<ul>
+					<li><a href="./tp_is_1.html">TP1 - Archive audio</a></li>
+					<li><a href="#"></a>TP2 - Callbacks</li>
+					<li><a href="./tp_js_2_exo234.html">TP2 - Carrés</a></li>
+				</ul>
+        </ul>
+      </aside>
+
+    </main>
+
+    <footer>
+      <p>©Copyright – tous droits réservés</p>
+    </footer>
+
+  </body>
+</html>

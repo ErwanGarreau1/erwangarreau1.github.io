@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Mes Travaux</title>
+    <link rel="stylesheet" type="text/css" href="../../style.css">
+	
+	<script>
+			
+			var video;
+			var aCanvas;
+			var ctx;
+			function init()
+			{
+				aCanvas = document.getElementById("myCanvas");
+				ctx = aCanvas.getContext("2d");
+				video = document.getElementById("player");
+				
+				resetCtx();
+			}
+			
+			function resetCtx(){
+				ctx.beginPath();
+				ctx.arc(100, 100, 75, 0, 2*Math.PI, false);
+				ctx.fillStyle = "#FFFFFF";
+				ctx.fill();
+				ctx.closePath();
+				ctx.strokeStyle = "#8B0000";
+				ctx.stroke();
+			}
+
+			function updateCanvas()
+			{
+				//ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+				resetCtx();
+				ctx.beginPath();
+				ctx.arc(100, 100, 75, 0, 2*Math.PI * video.currentTime / video.duration, false);
+				ctx.lineTo(100,100);
+				ctx.fillStyle = "#00003d";
+				ctx.fill();
+				ctx.closePath();
+				ctx.strokeStyle = "#8B0000";
+				ctx.stroke();
+			}
+</script>
+
+  </head>
+
+  <body onload='init()'>
+    <header>
+      <h1>Mes Travaux !</h1>
+	  <!-- Un jour peut être... -->
+    </header>
+
+    <nav>
+      <ul>
+		<li><a href="../mes_travaux.html" class="lien_titre">Mes travaux</a></li>
+        <li><a href="../../a_propos/a_propos.html" class="lien_titre"> À propos </a></li>
+        <li><a href="../../index.html" class="lien_titre"> Accueil </a></li>
+      </ul>
+
+     </nav>
+
+     <main>
+      <article>
+		<h2>TP1 - Archive audio</h2>
+        <p> "Mettez en place un script JS qui permette de contrôler la lecture d'une archive audio (play, pause, stop). Ce contrôleur visualisera la progression de la lecture sous la forme d'un arc de cercle se fermant proportionnellement au temps de lecture restante."</p>
+      
+		
+		<video id="player" controls preload tabindex="0" ontimeupdate="updateCanvas()" style="width:300px;height:auto;">
+		<source type="video/mp4" src="../../ressources/tomber=rip.mp4 "/>
+		<!-- Liste de courses : bonnet rouge, chaise en plastique et radiateur, fléchettes, mur de l'entrée, bord de bain... -->
+		Your browser does not support HTML5 audio.
+		</video>
+		<canvas id="myCanvas" width="200" height="200"></canvas>
+	  
+	  </article>
+
+      <aside>
+        <h2>Travaux réalisés</h2>
+        <ul>
+			<li><a href="#"></a>TP JavaScript</li>
+				<ul>
+					<li><a href="./tp_is_1.html"></a>TP1 - Archive audio</li>
+					<li><a href="./tp_js_2_exo1.html">TP2 - Callbacks</a></li>
+					<li><a href="./tp_js_2_exo234.html">TP2 - Carrés</a></li>
+				</ul>
+        </ul>
+      </aside>
+
+    </main>
+
+    <footer>
+      <p>©Copyright – tous droits réservés</p>
+    </footer>
+
+  </body>
+</html>
