@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Mes Travaux</title>
+    <link rel="stylesheet" type="text/css" href="../../style.css">
+	
+  </head>
+
+  <body onload=init()>
+    <header>
+      <h1>Mes Travaux !</h1>
+	  <!-- Un jour peut être... -->
+    </header>
+
+    <nav>
+      <ul>
+		<li><a href="../mes_travaux.html" class="lien_titre">Mes travaux</a></li>
+        <li><a href="../../a_propos/a_propos.html" class="lien_titre"> À propos </a></li>
+        <li><a href="../../index.html" class="lien_titre"> Accueil </a></li>
+      </ul>
+
+     </nav>
+
+     <main>
+      <article>
+		<h2>TP3 - Des cercles...</h2>
+        <p> "Envoyer une requête GET à 'https://stwom.herokuapp.com/int' avec int un entier.</p>
+		<p>Afficher un cercle aux coordonnées reçues"</p>
+		<p>Gros cercles : XHR, Petits cercles : FETCH</p>
+		
+		<h2 id="coordinates"></h2>
+
+		<h2><canvas id="ctnCanvas" width="600" height="600"
+			style="border:3px solid #c3c3c3;">
+		</canvas></h2>		
+	  </article>
+
+      <aside>
+        <h2>Travaux réalisés</h2>
+        <ul>
+			<li><a href="#"></a>TP JavaScript</li>
+				<ul>
+					<li><a href="./tp_is_1.html">TP1 - Archive audio</a></li>
+					<li><a href="./tp_js_2_exo1.html">TP2 - Callbacks</a></li>
+					<li><a href="./tp_js_2_exo234.html">TP2 - Carrés</a></li>
+					<li><a href="./tp_js_3_exo1.html"></a>TP3 - Des Cercles</li>
+				</ul>
+        </ul>
+      </aside>
+
+    </main>
+
+    <footer>
+      <p>©Copyright – tous droits réservés</p>
+    </footer>
+
+		<script type="text/javascript">
+		
+		function init(){
+			setInterval(newRequest, 300);
+		}
+		var myCanvas = document.getElementById("ctnCanvas");
+		var ctx=myCanvas.getContext("2d");
+		var xhr = new XMLHttpRequest();
+		var jsonResponse;
+		var colors = ['#ebfefd','#e5a1a5','#fef4ce','#b0e2b0'];
+		var cpt=0;
+		
+		//Appelé lorsque xhr reçoit la réponse
+		xhr.onreadystatechange  = function() 
+    	{ 
+	       	if(xhr.readyState  == 4)
+		    	{
+		        if(xhr.status  == 200) {
+					jsonResponse=JSON.parse(xhr.responseText);
+					createCircle(jsonResponse["x"],jsonResponse["y"], 50);
+					//console.log(jsonResponse["x"]+" - "+jsonResponse["y"]);
+				}
+		        else
+		            console.log("Error code " + xhr.status);
+		        }
+    	}; 
+
+		function createCircle(x, y, rayon){
+				ctx.beginPath();
+				ctx.arc(x, y, rayon, 0, 2*Math.PI, false);
+				ctx.fillStyle = colors[Math.floor(Math.random() * Math.floor(4))];
+				ctx.fill();
+				ctx.closePath();
+				ctx.strokeStyle = "#8B0000";
+				ctx.stroke();
+		}
+		
+		function newRequest(){
+			cpt=(cpt+1)%2;
+			console.log(cpt);
+			if(cpt){
+				//XHR request
+				xhr.open("get","https://stwom.herokuapp.com/600");
+				xhr.send("Access-Control-Allow-Origin: https://stwom.herokuapp.com/");
+			}
+			else {
+				//FETCH request
+				fetch('https://stwom.herokuapp.com/600')
+				  .then(response => response.json())
+				  .then(data => createCircle(data['x'],data['y'], 25));
+			}
+		}
+	</script>
+	
+  </body>
+</html>

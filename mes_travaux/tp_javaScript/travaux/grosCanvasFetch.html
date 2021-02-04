@@ -1,0 +1,55 @@
+
+<html>
+	<head>
+	</head>
+	<body onload = init()>
+		<h2><canvas id="ctnCanvas" width="600" height="600"
+			style="border:3px solid #c3c3c3;">
+		</canvas></h2>	
+	</body>
+	
+	<script type="text/javascript">
+		
+		function init(){
+			setInterval(newRequest, 300);
+		}
+		var myCanvas = document.getElementById("ctnCanvas");
+		var ctx=myCanvas.getContext("2d");
+		var xhr = new XMLHttpRequest();
+		var jsonResponse;
+		var colors = ['#ebfefd','#e5a1a5','#fef4ce'];
+		xhr.onreadystatechange  = function() 
+    	{ 
+	       	if(xhr.readyState  == 4)
+		    	{
+		        if(xhr.status  == 200) {
+					jsonResponse=JSON.parse(xhr.responseText);
+					createCircle(jsonResponse["x"],jsonResponse["y"], 50);
+					//console.log(jsonResponse["x"]+" - "+jsonResponse["y"]);
+				}
+		        else
+		            console.log("Error code " + xhr.status);
+		        }
+    	}; 
+
+		function createCircle(x, y, rayon){
+				ctx.beginPath();
+				ctx.arc(x, y, rayon, 0, 2*Math.PI, false);
+				ctx.fillStyle = colors[Math.floor(Math.random() * Math.floor(3))];
+				ctx.fill();
+				ctx.closePath();
+				ctx.strokeStyle = "#8B0000";
+				ctx.stroke();
+		}
+		
+		function newRequest(){
+			xhr.open("get","https://stwom.herokuapp.com/600");
+			xhr.send("Access-Control-Allow-Origin: https://stwom.herokuapp.com/");
+			
+			
+			fetch('https://stwom.herokuapp.com/600')
+			  .then(response => response.json())
+			  .then(data => createCircle(data['x'],data['y'], 20));
+		}
+	</script>
+</html>
