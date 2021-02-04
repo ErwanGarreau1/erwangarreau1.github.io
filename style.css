@@ -91,6 +91,8 @@ nav a {
 }
 
 .lien_titre{
+	white-space: nowrap;
+	overflow: hidden;
 	font-size: 3rem;
 	text-align:center;
 	font-weight: bold;
@@ -110,7 +112,6 @@ nav a {
 .lien_titre:hover{
 	color:#fdcc0d;
 	background-color:#00003d;
-    border-radius: 0% 20%;
 }
 
 .center {
@@ -169,4 +170,70 @@ aside li {
 
 footer {
   margin-top: 10px;
+}
+
+
+/** DROPDOWN **/
+/* Dropdown Button */
+.droptxt {
+  color: #00003d;
+  padding-right:20px;
+  padding-left:20px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-family: 'Sonsie One', cursive;
+  font-style: normal;
+  border: none;
+  font-size: 2rem;
+  text-align:center;
+  text-decoration: none;
+  margin:0;
+  background-color:#C0C0C0;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	display: inline-block;
+	border: 3px solid #8B0000;
+    border-radius:5%;	
+	position: relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #e6e6e6;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border: 3px solid #8B0000;
+  border-radius:5%;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: #00003d;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-family: 'Sonsie One', cursive;
+  font-style: normal;
+  font-size:16px;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+	color:#fdcc0d;
+	background-color:#00003d;
+	}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .droptxt {
+	color:#fdcc0d;
+	background-color:#00003d;
 }
