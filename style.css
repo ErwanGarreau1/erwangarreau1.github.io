@@ -93,7 +93,7 @@ nav a {
 .lien_titre{
 	white-space: nowrap;
 	overflow: hidden;
-	font-size: 3em;
+	font-size: 3rem;
 	text-align:center;
 	font-weight: bold;
 	font-family: 'Sonsie One', cursive;
@@ -106,7 +106,7 @@ nav a {
 	padding-bottom:2%;
 	display: inline-block;
 	border: 3px solid #00003d;
-    border-radius:0% 20%;
+    	border-radius:0% 20%;
 }
 
 .lien_titre:hover{
