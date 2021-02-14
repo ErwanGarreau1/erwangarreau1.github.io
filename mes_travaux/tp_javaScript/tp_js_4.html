@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Mes Travaux</title>
+    <link rel="stylesheet" type="text/css" href="../../style.css">
+	
+  </head>
+
+  <body>
+    <header>
+      <h1>Mes Travaux !</h1>
+	  <!-- Un jour peut être... -->
+    </header>
+
+    <nav>
+      <ul>
+		<li><a href="../mes_travaux.html" class="lien_titre">Mes travaux</a></li>
+        <li><a href="../../a_propos/a_propos.html" class="lien_titre"> À propos </a></li>
+        <li><a href="../../index.html" class="lien_titre"> Accueil </a></li>
+      </ul>
+
+     </nav>
+
+     <main>
+      <article>
+		<h2>TP4 - Des cercles, WebWorkers...</h2>
+        <p> "Afficher 10 web workers qui produisent des coordonnées aléatoires toutes les 1 seconde en moyenne</p>
+		
+		<h2 id="coordinates"></h2>
+
+		<h2><canvas id="ctnCanvas" width="600" height="600"
+			style="border:3px solid #c3c3c3;">
+		</canvas></h2>		
+	  </article>
+
+      <aside>
+        <h2>Travaux réalisés</h2>
+        <ul>
+			<div class="dropdown">
+				<h3 class="droptxt">TP JavaScript</h3>
+				<div class="dropdown-content">
+					<a href="./tp_is_1.html">TP1 - Archive audio</a>
+					<a href="./tp_js_2_exo1.html">TP2 - Callbacks</a>
+					<a href="./tp_js_2_exo234.html">TP2 - Des Carrés</a>
+					<a href="./tp_js_3_exo1.html">TP3 - Des Cercles</a>
+					<a href="./tp_js_4.html">TP4 - D'autres Cercles</a>
+				</div>
+			</div>
+        </ul>
+      </aside>
+
+    </main>
+
+    <footer>
+      <p>©Copyright – tous droits réservés</p>
+    </footer>
+
+		<script type="text/javascript">
+	
+	var myCanvas = document.getElementById("ctnCanvas");
+	var ctx=myCanvas.getContext("2d");
+	
+	var colors = ['#ebfefd','#e5a1a5','#fef4ce','#b0e2b0','#ECEBEB','#D2B4DE','#F0B27A','#AED6F1','#808B96','#FDFEFE'];
+	var workers = [];
+	
+	var intervalID = setInterval(callBack, 250);
+	
+	function callBack(){
+		let val = Math.random();
+		if(val < 1/4){
+			workers.forEach(element => element.worker.postMessage('up !'));
+		}
+	}
+	
+	function newWorkerClass(color, rayon) {
+		var result = {
+			rayon: rayon,
+			color: color,
+			worker: new Worker("worker.js"),
+			
+			drawCircle: function(x,y) {
+				ctx.beginPath();
+				ctx.arc(x, y, this.rayon, 0, 2*Math.PI, false);
+				ctx.fillStyle = this.color;
+				ctx.fill();
+				ctx.closePath();
+				ctx.strokeStyle = "#8B0000";
+				ctx.stroke();
+			},
+		};
+		return result;			
+	}
+	
+	if (window.Worker) {
+		
+		for(i=0; i<10; i++){
+			workers.push(newWorkerClass(colors[i], 40));
+		}
+		workers.forEach(setMessage);
+		
+		function setMessage(element, index, array){
+			element.worker.onmessage = function(e) {
+				console.log('Message received from worker : '+e.data);
+				element.drawCircle(e.data[0],e.data[1]);
+			}
+		}
+		
+	} else {
+		console.log('Your browser doesn\'t support web workers.')
+	}
+	</script>
+	
+  </body>
+</html>

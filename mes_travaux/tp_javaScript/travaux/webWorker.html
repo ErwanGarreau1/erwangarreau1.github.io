@@ -1,0 +1,62 @@
+
+<html>
+	<head>
+	</head>
+	<body onload >
+		<h2><canvas id="ctnCanvas" width="600" height="600"
+			style="border:3px solid #c3c3c3;">
+		</canvas></h2>	
+	</body>
+	
+	<script type="text/javascript">
+	
+	var myCanvas = document.getElementById("ctnCanvas");
+	var ctx=myCanvas.getContext("2d");
+	
+	var colors = ['#ebfefd','#e5a1a5','#fef4ce','#b0e2b0','#ECEBEB','#D2B4DE','#F0B27A','#AED6F1','#808B96','#FDFEFE'];
+	var workers = [];
+	
+	var intervalID = setInterval(callBack, 1000);
+	
+	function callBack(){
+		workers.forEach(element => element.worker.postMessage('up !'));
+	}
+	
+	function newWorkerClass(color, rayon) {
+		var result = {
+			rayon: rayon,
+			color: color,
+			worker: new Worker("worker.js"),
+			
+			drawCircle: function(x,y) {
+				ctx.beginPath();
+				ctx.arc(x, y, this.rayon, 0, 2*Math.PI, false);
+				ctx.fillStyle = this.color;
+				ctx.fill();
+				ctx.closePath();
+				ctx.strokeStyle = "#8B0000";
+				ctx.stroke();
+			},
+		};
+		return result;			
+	}
+	
+	if (window.Worker) {
+		
+		for(i=0; i<10; i++){
+			workers.push(newWorkerClass(colors[i], 40));
+		}
+		workers.forEach(setMessage);
+		
+		function setMessage(element, index, array){
+			element.worker.onmessage = function(e) {
+				console.log('Message received from worker : '+e.data);
+				element.drawCircle(e.data[0],e.data[1]);
+			}
+		}
+		
+	} else {
+		console.log('Your browser doesn\'t support web workers.')
+	}
+	</script>
+</html>
